@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Hello World!</h1>
+
+{% if user.id == 1 %}
+    <h4>Hello, {{ user.username }}</h4>
+{% else %}
+    <h4>Please register to see your name</h4>
+{% endif %}
+
+<ol class="list-group">
+    {% for item in items|sort %}
+    <li class='list-group-item'>{{ item|upper }}</li>
+    {% endfor %}
+</ol>
+
+{% endblock content %}

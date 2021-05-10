@@ -1,11 +1,20 @@
 from app import app
+from flask import render_template
 
 @app.route('/')
-def hello_world():
-    return 'Hello World!'
+def index():
+    context = {
+       'title': 'HOME',
+       'items': ['apple', 'banana', 'orange', 'pear', 'watermelon', 'grapefruit', 'grapes'],
+       'user': {
+            'id': 2,
+            'username': 'Brian'
+        }  
+    }
+    return render_template('index.html', **context)
 
 
-@app.route('/name')
-def name():
-    name = 'Brian'
-    return f'Hello, {name}'
+@app.route('/register')
+def register():
+    title = 'REGISTER'
+    return render_template('register.html', title=title)
