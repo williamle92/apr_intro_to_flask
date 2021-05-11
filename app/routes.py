@@ -1,13 +1,13 @@
 from app import app, db
 from flask import render_template, request, redirect, url_for, flash
 from app.forms import UserInfoForm
-from app.models import User
+from app.models import User, Post
 
 @app.route('/')
 def index():
     context = {
        'title': 'HOME',
-       'items': ['apple', 'banana', 'orange', 'pear', 'watermelon', 'grapefruit', 'grapes'],
+       'posts': Post.query.all(),
        'user': {
             'id': 2,
             'username': 'Brian'
