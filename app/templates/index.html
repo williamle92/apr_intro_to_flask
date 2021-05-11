@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Hello World!</h1>
+<div class="banner">
+    <h1 class="header-text">Welcome to Coding Temple Flask</h1>
+</div>
 
 {% if user.id == 1 %}
     <h4>Hello, {{ user.username }}</h4>
