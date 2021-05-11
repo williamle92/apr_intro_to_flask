@@ -1,6 +1,7 @@
-from app import app
-from flask import render_template, request
+from app import app, db
+from flask import render_template, request, redirect, url_for, flash
 from app.forms import UserInfoForm
+from app.models import User
 
 @app.route('/')
 def index():
@@ -23,6 +24,19 @@ def register():
         username = form.username.data
         email = form.email.data
         password = form.password.data
-        print(username, email, password)
+        # print(username, email, password)
+        # Check if username/email already exists
+        existing_user = User.query.filter((User.username == username) | (User.email == email)).all()
+        if existing_user:
+            flash('That username or email already exists. Please try again', 'danger')
+            return redirect(url_for('register'))
+        
+        new_user = User(username, email, password)
+        db.session.add(new_user)
+        db.session.commit()
+
+        flash(f'Thank you {username} for registering!', 'success')
+        return redirect(url_for('index'))
+
 
     return render_template('register.html', title=title, form=form)

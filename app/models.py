@@ -12,3 +12,6 @@ class User(db.Model):
         self.username = username
         self.email = email
         self.password = generate_password_hash(password)
+
+    def __repr__(self):
+        return f'<User | {self.username}>'
