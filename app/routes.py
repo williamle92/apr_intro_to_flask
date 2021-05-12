@@ -9,11 +9,7 @@ from app.models import User, Post
 def index():
     context = {
        'title': 'HOME',
-       'posts': Post.query.all(),
-       'user': {
-            'id': 2,
-            'username': 'Brian'
-        }  
+       'posts': Post.query.all()
     }
     return render_template('index.html', **context)
 
@@ -56,4 +52,16 @@ def login():
         if user is None or not check_password_hash(user.password, password):
             flash('Incorrect Username/Password. Please try again.', 'danger')
             return redirect(url_for('login'))
+        
+        login_user(user, remember=form.remember_me.data)
+        flash('You have succesfully logged in!', 'success')
+        return redirect(url_for('index'))
+
     return render_template('login.html', title=title, form=form)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    flash('You have successfully logged out!', 'primary')
+    return redirect(url_for('index'))
