@@ -1,6 +1,7 @@
-from app import app, db
+from app import app, db, mail
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
+from flask_mail import Message
 from werkzeug.security import check_password_hash
 from app.forms import UserInfoForm, LoginForm, PostForm
 from app.models import User, Post
@@ -34,6 +35,11 @@ def register():
         db.session.commit()
 
         flash(f'Thank you {username} for registering!', 'success')
+
+        msg = Message(f'Thank you, {username}', recipients=[email])
+        msg.body = f'Dear {username}, thank you so much for signing up for this super cool app. I hope you enjoy and also you look super good today!'
+        mail.send(msg)
+
         return redirect(url_for('index'))
 
 
