@@ -1,10 +1,8 @@
-from app import app, db, mail
-from flask import render_template, request, redirect, url_for, flash
-from flask_login import login_user, logout_user, login_required, current_user
-from flask_mail import Message
-from werkzeug.security import check_password_hash
-from app.forms import UserInfoForm, LoginForm, PostForm
-from app.models import User, Post
+from app import db
+from flask import current_app as app, render_template, request, redirect, url_for, flash
+from flask_login import login_required, current_user
+from app.forms import PostForm
+from app.models import Post
 
 @app.route('/')
 def index():
