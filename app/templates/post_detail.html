@@ -32,7 +32,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Confirm Delete</button>
+          <form action="{{ url_for('blog.post_delete', post_id=post.id) }}" method="POST">
+            {{ form.hidden_tag() }}
+            {{ form.submit(class='btn btn-danger', value='Confirm Delete') }}
+          </form>
         </div>
       </div>
     </div>
