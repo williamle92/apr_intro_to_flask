@@ -41,3 +41,26 @@ def post_detail(post_id):
     post = Post.query.get_or_404(post_id)
     title = f'{post.title}'
     return render_template('post_detail.html', title=title, post=post)
+
+
+@blog.route('/posts/update/<int:post_id>', methods=['GET', 'POST'])
+@login_required
+def post_update(post_id):
+    post = Post.query.get_or_404(post_id)
+    title = f'UPDATE {post.title}'
+    if post.author.id != current_user.id:
+        flash("You cannot update another user's post. Who do you think you are?", "warning")
+        return redirect(url_for('myposts'))
+    update_form = PostForm()
+    if request.method == 'POST' and update_form.validate_on_submit():
+        post_title = update_form.title.data
+        post_body = update_form.body.data
+
+        post.title = post_title
+        post.body = post_body
+
+        db.session.commit()
+
+        return redirect(url_for('blog.post_detail', post_id=post.id))
+
+    return render_template('post_update.html', title=title, post=post, form=update_form)
