@@ -26,3 +26,11 @@ def createpost():
         return redirect(url_for('index'))
 
     return render_template('createpost.html', title=title, form=form)
+
+
+@blog.route('/myposts')
+@login_required
+def myposts():
+    title = 'MY POSTS'
+    posts = Post.query.filter_by(user_id=current_user.id).all()
+    return render_template('myposts.html', title=title, posts=posts)
