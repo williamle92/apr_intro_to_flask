@@ -34,3 +34,10 @@ def myposts():
     title = 'MY POSTS'
     posts = Post.query.filter_by(user_id=current_user.id).all()
     return render_template('myposts.html', title=title, posts=posts)
+
+
+@blog.route('/posts/<int:post_id>')
+def post_detail(post_id):
+    post = Post.query.get_or_404(post_id)
+    title = f'{post.title}'
+    return render_template('post_detail.html', title=title, post=post)
